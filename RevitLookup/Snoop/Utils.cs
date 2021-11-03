@@ -62,14 +62,12 @@ namespace RevitLookup.Snoop
                 // and don't add a SubItem for the "Field" value
                 if (tmpSnoopData.IsSeparator)
                 {
-                    var lvItem = new ListViewItem(tmpSnoopData.StrValue());
+                    var lvItem = new ListViewItem(tmpSnoopData.StrValue())
+                    {
+                        BackColor = tmpSnoopData is ClassSeparator ? Color.LightBlue : Color.WhiteSmoke,
+                        Tag = tmpSnoopData
+                    };
 
-                    if (tmpSnoopData is ClassSeparator)
-                        lvItem.BackColor = Color.LightBlue;
-                    else
-                        lvItem.BackColor = Color.WhiteSmoke;
-
-                    lvItem.Tag = tmpSnoopData;
                     lvCur.Items.Add(lvItem);
                 }
                 else
@@ -247,7 +245,7 @@ namespace RevitLookup.Snoop
                 if (!multipleItems)
                     Clipboard.SetDataObject(lvItem.SubItems[1].Text);
                 else
-                    Clipboard.SetDataObject(lvItem.SubItems[0].Text + " => " + lvItem.SubItems[1].Text);
+                    Clipboard.SetDataObject($"{lvItem.SubItems[0].Text} => {lvItem.SubItems[1].Text}");
             }
             else
             {
@@ -304,7 +302,7 @@ namespace RevitLookup.Snoop
 
                 //Draw the field portion of the list view item
                 //
-                e.Graphics.DrawString(" " + item.Text, item.Font, textBrush, rect, fieldFormat);
+                e.Graphics.DrawString($" {item.Text}", item.Font, textBrush, rect, fieldFormat);
 
                 //Draw the value portion of the list view item
                 //
@@ -314,7 +312,7 @@ namespace RevitLookup.Snoop
                     subbackgroundBrush = new SolidBrush(item.SubItems[1].BackColor);
 
                     e.Graphics.FillRectangle(subbackgroundBrush, rect);
-                    e.Graphics.DrawString(" " + item.SubItems[1].Text, item.Font, textBrush, rect, valueFormat);
+                    e.Graphics.DrawString($" {item.SubItems[1].Text}", item.Font, textBrush, rect, valueFormat);
                 }
                 else
                 {
