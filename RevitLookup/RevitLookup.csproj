@@ -5,16 +5,11 @@
         <TargetFramework>net48</TargetFramework>
         <OutputType>Library</OutputType>
         <UseWpf>true</UseWpf>
-        <Version>22.0.2.3</Version>
+        <Version>22.0.2.4</Version>
         <UseWindowsForms>true</UseWindowsForms>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <LangVersion>9</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <PlatformTarget>x64</PlatformTarget>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <PlatformTarget>x64</PlatformTarget>
+        <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
     <PropertyGroup>
         <RevitVersion>2022</RevitVersion>
@@ -23,11 +18,11 @@
     <ItemGroup>
         <PackageReference Include="Revit_API_x64" Version="$(RevitVersion).0.0" />
     </ItemGroup>
-    
+
     <ItemGroup>
-        <Resource Include="Resources\RLookup-16.ico" />
-        <Resource Include="Resources\RLookup-16.png" />
-        <Resource Include="Resources\RLookup-32.png" />
+        <Resource Include="Resources\Images\RLookup-16.ico" />
+        <Resource Include="Resources\Images\RLookup-16.png" />
+        <Resource Include="Resources\Images\RLookup-32.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -39,13 +34,13 @@
     <ItemGroup>
         <AddinDll Include="$(TargetDir)$(AssemblyName).dll" />
     </ItemGroup>
-    
+
     <Target Name="AfterBuildTarget" AfterTargets="CoreBuild">
         <PropertyGroup>
             <AddinDir>bin\AddIn $(RevitVersion) $(Configuration)\</AddinDir>
             <OutAddinDir>$(AddinDir)$(AssemblyName)\</OutAddinDir>
         </PropertyGroup>
-        
+
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).addin" DestinationFolder="$(AddinDir)" />
         <Copy SourceFiles="@(AddinDll)" DestinationFolder="$(OutAddinDir)" />
 
