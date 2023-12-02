@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2023 by Autodesk, Inc.
+// Copyright 2003-2023 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -18,11 +18,14 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 
+using System.Collections;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using RevitLookup.Services.Contracts;
 using Wpf.Ui;
+using Wpf.Ui.Appearance;
 
 namespace RevitLookup.Views;
 
@@ -72,6 +75,121 @@ public sealed partial class RevitLookupView : IWindow
 
         InputBindings.Add(new KeyBinding(closeAllCommand, new KeyGesture(Key.Escape, ModifierKeys.Shift)));
         InputBindings.Add(new KeyBinding(closeCurrentCommand, new KeyGesture(Key.Escape)));
+
+        // ThemeChangedEvent to fix the issue with the window background not being updated when the theme is changed.
+        {
+            ThemeChangedEvent themeChanged = (sender, args) =>
+            {
+                this.Dispatcher.InvokeAsync(() =>
+                {
+                    foreach (var resource in this.Resources.MergedDictionaries.ToList())
+                    {
+                        this.Resources.MergedDictionaries.Add(resource);
+                        this.Resources.MergedDictionaries.RemoveAt(0);
+                    }
+                });
+            };
+            if (this.IsLoaded)
+            {
+                ApplicationThemeManager.Changed += themeChanged;
+            }
+            this.Loaded += (s, e) =>
+            {
+                ApplicationThemeManager.Changed += themeChanged;
+            };
+            this.Unloaded += (s, e) =>
+            {
+                ApplicationThemeManager.Changed -= themeChanged;
+            };
+        }
+
+#if DEBUG
+
+        this.KeyDown += (s, e) =>
+        {
+            if (e.Key == Key.E)
+            {
+                var theme = ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Light ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                ApplicationThemeManager.Apply(theme);
+                ApplicationThemeManager.Apply(theme, Wpf.Ui.Controls.WindowBackdropType.Mica, forceBackground: true);
+            }
+            if (e.Key == Key.T)
+            {
+                var theme = ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Light ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                ApplicationThemeManager.Apply(theme);
+            }
+            if (e.Key == Key.D)
+            {
+                var theme = ApplicationTheme.Dark;
+                ApplicationThemeManager.Apply(theme);
+                WindowBackgroundManager.UpdateBackground(this, theme, Wpf.Ui.Controls.WindowBackdropType.None, true);
+            }
+            if (e.Key == Key.F)
+            {
+                Debug.WriteLine($">>> {Wpf.Ui.Application.MainWindow}");
+                foreach (DictionaryEntry resource in Wpf.Ui.Application.MainWindow.Resources.OfType<DictionaryEntry>().OrderBy(e => e.Key))
+                {
+                    this.Resources[resource.Key] = resource.Value;
+                    Debug.WriteLine(
+                        $"INFO | Copy Resource {resource.Key} - {resource.Value}",
+                        "Wpf.Ui.Appearance"
+                    );
+                }
+            }
+
+            if (e.Key == Key.Y)
+            {
+                var theme = ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Light ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                ApplicationThemeManager.Apply(theme);
+                foreach (var resource in this.Resources.MergedDictionaries.ToList())
+                {
+                    this.Resources.MergedDictionaries.Add(resource);
+                    this.Resources.MergedDictionaries.RemoveAt(0);
+                }
+            }
+
+            if (e.Key == Key.P)
+            {
+                var theme = ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Light ? ApplicationTheme.Dark : ApplicationTheme.Light;
+                ApplicationThemeManager.Apply(theme);
+                foreach (var resource in Wpf.Ui.Application.MainWindow.Resources.MergedDictionaries.ToList())
+                {
+                    Wpf.Ui.Application.MainWindow.Resources.MergedDictionaries.Add(resource);
+                    Wpf.Ui.Application.MainWindow.Resources.MergedDictionaries.RemoveAt(0);
+                }
+            }
+
+
+            if (e.Key == Key.U)
+            {
+                foreach (var resource in this.Resources.MergedDictionaries.ToList())
+                {
+                    this.Resources.MergedDictionaries.Add(resource);
+                    this.Resources.MergedDictionaries.RemoveAt(0);
+                }
+            }
+
+            if (e.Key == Key.R)
+            {
+                var resourceDictionary = new ResourceDictionary();
+                foreach (var resource in Wpf.Ui.Application.MainWindow.Resources.MergedDictionaries)
+                {
+                    Debug.WriteLine(
+                        $"INFO | Resources {resource.Source}",
+                        "Wpf.Ui.Appearance"
+                    );
+                    resourceDictionary.MergedDictionaries.Add(resource);
+                }
+
+                //foreach (var resource in resourceDictionary.MergedDictionaries)
+                //{
+                //    Wpf.Ui.Application.MainWindow.Resources.MergedDictionaries.Add(resource);
+                //    Wpf.Ui.Application.MainWindow.Resources.MergedDictionaries.RemoveAt(0);
+                //}
+            }
+        };
+#endif
+
     }
 
     private void RestoreSize(ISettingsService settingsService)
