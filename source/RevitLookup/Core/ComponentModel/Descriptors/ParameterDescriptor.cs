@@ -20,7 +20,7 @@
 
 using System.Reflection;
 using System.Windows.Controls;
-using Microsoft.Extensions.Logging;
+//using Microsoft.Extensions.Logging;
 using RevitLookup.Core.Contracts;
 using RevitLookup.Core.Objects;
 using RevitLookup.ViewModels.Contracts;

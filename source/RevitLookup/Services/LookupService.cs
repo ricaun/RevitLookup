@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -21,7 +21,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Microsoft.Extensions.DependencyInjection;
+using ricaun.DI;
 using Nice3point.Revit.Toolkit;
 using RevitLookup.Core.Objects;
 using RevitLookup.Services.Contracts;
@@ -44,7 +44,7 @@ public sealed class LookupService : ILookupService
         EnsureThreadStart(uiThread);
     }
 
-    public LookupService(IServiceScopeFactory scopeFactory)
+    public LookupService(IContainerResolver scopeFactory)
     {
         if (Thread.CurrentThread == _dispatcher.Thread)
         {
@@ -52,7 +52,18 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService = new LookupServiceImpl(scopeFactory));
+            _dispatcher.InvokeAsync(() =>
+            {
+                try
+                {
+                    _lookupService = new LookupServiceImpl(scopeFactory);
+                    Console.WriteLine("_lookupService");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            });
         }
     }
 
@@ -114,6 +125,7 @@ public sealed class LookupService : ILookupService
 
     public ILookupServiceExecuteStage Show<T>() where T : Page
     {
+        Console.WriteLine($"Show: {_lookupService} {_dispatcher}");
         if (Thread.CurrentThread == _dispatcher.Thread)
         {
             _lookupService.Show<T>();
@@ -155,18 +167,18 @@ public sealed class LookupService : ILookupService
     {
         private Window _owner;
         private Task _activeTask;
-        private readonly IServiceScope _scope;
+        private readonly IContainerResolver _scope;
         private readonly ISnoopVisualService _visualService;
         private readonly INavigationService _navigationService;
         private readonly Window _window;
 
-        public LookupServiceImpl(IServiceScopeFactory scopeFactory)
+        public LookupServiceImpl(IContainerResolver scopeFactory)
         {
             _scope = scopeFactory.CreateScope();
 
-            _window = (Window) _scope.ServiceProvider.GetService<IWindow>();
-            _visualService = _scope.ServiceProvider.GetService<ISnoopVisualService>();
-            _navigationService = _scope.ServiceProvider.GetService<INavigationService>();
+            _window = (Window) _scope.Resolve<IWindow>();
+            _visualService = _scope.Resolve<ISnoopVisualService>();
+            _navigationService = _scope.Resolve<INavigationService>();
 
             _window.Closed += (_, _) => _scope.Dispose();
         }
@@ -217,7 +229,7 @@ public sealed class LookupService : ILookupService
 
         private void InvokeHandler<T>(Action<T> handler) where T : class
         {
-            var service = _scope.ServiceProvider.GetService<T>();
+            var service = _scope.Resolve<T>();
             handler.Invoke(service);
         }
 

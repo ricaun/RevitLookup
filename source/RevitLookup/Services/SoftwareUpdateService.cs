@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -22,8 +22,8 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+//using Microsoft.Extensions.Logging;
+//using Microsoft.Extensions.Options;
 using RevitLookup.Models;
 using RevitLookup.Models.Options;
 using RevitLookup.Services.Contracts;

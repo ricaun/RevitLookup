@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -22,7 +22,7 @@ using System.Runtime;
 using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Options;
+//using Microsoft.Extensions.Options;
 using RevitLookup.Models.Options;
 using RevitLookup.Services.Contracts;
 using RevitLookup.Services.Enums;

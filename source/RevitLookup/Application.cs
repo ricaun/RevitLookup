@@ -29,6 +29,7 @@ using RevitLookup.Utils;
 
 namespace RevitLookup;
 
+[AppLoader]
 [UsedImplicitly]
 public class Application : ExternalApplication
 {
@@ -46,7 +47,7 @@ public class Application : ExternalApplication
         var updateService = Host.GetService<ISoftwareUpdateService>();
         
         EnableHardwareRendering(settingsService);
-        RibbonController.CreatePanel(Application, settingsService);
+        //RibbonController.CreatePanel(Application, settingsService);
         
         updateService.CheckUpdates();
     }
@@ -92,4 +93,8 @@ public class Application : ExternalApplication
         ExternalElementHandler = new AsyncEventHandler<IList<SnoopableObject>>();
         ExternalDescriptorHandler = new AsyncEventHandler<IList<Descriptor>>();
     }
+}
+
+internal class AppLoaderAttribute : Attribute
+{
 }
