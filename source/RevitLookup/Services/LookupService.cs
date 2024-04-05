@@ -44,7 +44,7 @@ public sealed class LookupService : ILookupService
         EnsureThreadStart(uiThread);
     }
 
-    public LookupService(IContainerResolver scopeFactory)
+    public LookupService(IContainer scopeFactory)
     {
         if (Thread.CurrentThread == _dispatcher.Thread)
         {
@@ -172,7 +172,7 @@ public sealed class LookupService : ILookupService
         private readonly INavigationService _navigationService;
         private readonly Window _window;
 
-        public LookupServiceImpl(IContainerResolver scopeFactory)
+        public LookupServiceImpl(IContainer scopeFactory)
         {
             _scope = scopeFactory.CreateScope();
 

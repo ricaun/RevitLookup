@@ -86,7 +86,7 @@ public static class Host
         var container = ContainerUtils.CreateContainer();
         container.EnableConsolePrinting(true);
 
-        container.AddTransient<IServiceProvider, ServiceProvider>();
+        container.AddScoped<IServiceProvider, ServiceProvider>();
 
         //Configuration
         container.AddOptions();
