@@ -118,7 +118,7 @@ public static class AssemblyContext
 {
     public static bool IsDefault()
     {
-        return true;
+        return false;
     }
 
     public static dynamic InstanceFrom<T>(string assemblyPath = null, string typeName = null)

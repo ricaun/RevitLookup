@@ -90,10 +90,6 @@
         <ApplicationDefinition Remove="App.xaml" />
         <Page Include="App.xaml" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="Test.txt" />
-    </ItemGroup>
         
     <ItemGroup>
         <EmbeddedResource Update="Resources\Resources\Colors.resx">

@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -19,6 +19,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 
 using Nice3point.Revit.Toolkit.External;
+using RevitLookup.Utils;
 
 namespace RevitLookup.Commands;
 
@@ -26,9 +27,9 @@ public static class CommandContext
 {
     public static bool InstanceExecute<T>() where T : ExternalCommand
     {
-        if (Utils.AssemblyContext.IsDefault())
+        if (AssemblyContext.IsDefault())
         {
-            Utils.AssemblyContext.InstanceFrom<T>().Execute();
+            AssemblyContext.InstanceFrom<T>().Execute();
             return true;
         }
         return false;
