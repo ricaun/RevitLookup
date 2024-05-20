@@ -9,7 +9,7 @@ namespace Wpf.Ui.Controls;
 public partial class NavigationView
 {
     public static readonly DependencyProperty HeaderContentProperty = DependencyProperty.RegisterAttached(
-        "HeaderContentNavigationView",
+        "HeaderContent",
         typeof(object),
         typeof(NavigationView),
         new FrameworkPropertyMetadata(null)
