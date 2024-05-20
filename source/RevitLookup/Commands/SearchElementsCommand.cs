@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -32,6 +32,9 @@ public class SearchElementsCommand : ExternalCommand
 {
     public override void Execute()
     {
+        if (CommandContext.InstanceExecute<SearchElementsCommand>())
+            return;
+
         Host.GetService<ILookupService>()
             .Show<DashboardView>()
             .Execute<IDashboardViewModel>(dashboard => dashboard.OpenDialogCommand.Execute("search"));

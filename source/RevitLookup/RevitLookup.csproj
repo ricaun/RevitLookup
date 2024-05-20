@@ -57,14 +57,14 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
 
         <!--IOC-->
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.*" Condition="$(RevitVersion) == '2025'" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) == '2025'" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'" />
         
         <!--Logging-->
         <PackageReference Include="Serilog.Sinks.Debug" Version="2.*" />
         <PackageReference Include="Serilog.Sinks.Console" Version="5.*" />
         <PackageReference Include="Serilog.Sinks.Autodesk.Revit" Version="2.0.0" />
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="7.*" Condition="$(RevitVersion) == '2025'" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) == '2025'" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="8.*" Condition="$(RevitVersion) != '' And $(RevitVersion) &lt; '2025'" />
         
         <!--Compability-->
@@ -72,7 +72,7 @@
     </ItemGroup>
 
     <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-        <AssemblyName>RevitLookup.Dev</AssemblyName>
+        <AssemblyName>RevitLookup</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -91,6 +91,10 @@
         <Page Include="App.xaml" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="Test.txt" />
+    </ItemGroup>
+        
     <ItemGroup>
         <EmbeddedResource Update="Resources\Resources\Colors.resx">
             <Generator>ResXFileCodeGenerator</Generator>

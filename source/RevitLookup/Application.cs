@@ -28,7 +28,7 @@ using RevitLookup.Services.Contracts;
 using RevitLookup.Utils;
 
 namespace RevitLookup;
-
+[AppLoader]
 [UsedImplicitly]
 public class Application : ExternalApplication
 {
@@ -36,9 +36,17 @@ public class Application : ExternalApplication
     public static AsyncEventHandler AsyncEventHandler { get; private set; }
     public static AsyncEventHandler<IList<SnoopableObject>> ExternalElementHandler { get; private set; }
     public static AsyncEventHandler<IList<Descriptor>> ExternalDescriptorHandler { get; private set; }
-    
+
+    private static Autodesk.Revit.UI.IExternalApplication _externalApplication;
     public override void OnStartup()
     {
+        if (AssemblyContext.IsDefault())
+        {
+            _externalApplication = AssemblyContext.InstanceFrom<Application, Autodesk.Revit.UI.IExternalApplication>();
+            _externalApplication.OnStartup(Application);
+            return;
+        }
+
         RegisterHandlers();
         Host.Start();
         
@@ -53,9 +61,17 @@ public class Application : ExternalApplication
     
     public override void OnShutdown()
     {
+        if (AssemblyContext.IsDefault())
+        {
+            _externalApplication.OnShutdown(Application);
+            return;
+        }
+
         SaveSettings();
         UpdateSoftware();
         Host.Stop();
+
+        AssemblyContext.Unload();
     }
     
     private static void UpdateSoftware()

@@ -1,4 +1,4 @@
-// Copyright 2003-2024 by Autodesk, Inc.
+﻿// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -18,25 +18,19 @@
 // Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
 // (Rights in Technical Data and Computer Software), as applicable.
 
-using Autodesk.Revit.Attributes;
 using Nice3point.Revit.Toolkit.External;
-using RevitLookup.Services.Contracts;
-using RevitLookup.Services.Enums;
-using RevitLookup.Views.Pages;
 
 namespace RevitLookup.Commands;
 
-[UsedImplicitly]
-[Transaction(TransactionMode.Manual)]
-public class SnoopDocumentCommand : ExternalCommand
+public static class CommandContext
 {
-    public override void Execute()
+    public static bool InstanceExecute<T>() where T : ExternalCommand
     {
-        if (CommandContext.InstanceExecute<SnoopDocumentCommand>())
-            return;
-
-        Host.GetService<ILookupService>()
-            .Snoop(SnoopableType.Document)
-            .Show<SnoopView>();
+        if (Utils.AssemblyContext.IsDefault())
+        {
+            Utils.AssemblyContext.InstanceFrom<T>().Execute();
+            return true;
+        }
+        return false;
     }
 }
