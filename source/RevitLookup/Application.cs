@@ -85,7 +85,7 @@ public class Application : ExternalApplication
         RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
     }
     
-    private static void RegisterHandlers()
+    internal static void RegisterHandlers()
     {
         ActionEventHandler = new ActionEventHandler();
         AsyncEventHandler = new AsyncEventHandler();

@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -29,6 +29,23 @@ using Wpf.Ui;
 
 namespace RevitLookup.Services;
 
+public static class DispatcherExtension
+{
+    public static void InvokeAsyncE(this Dispatcher dispatcher, Action callback)
+    {
+        dispatcher.InvokeAsync(() => {
+            try
+            {
+                callback();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        });
+    }
+}
+
 public sealed class LookupService : ILookupService
 {
     private static Dispatcher _dispatcher;
@@ -39,6 +56,8 @@ public sealed class LookupService : ILookupService
         var uiThread = new Thread(Dispatcher.Run);
         uiThread.SetApartmentState(ApartmentState.STA);
         uiThread.Start();
+
+        //var uiThread = Thread.CurrentThread;
 
         EnsureThreadStart(uiThread);
     }
@@ -51,7 +70,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService = new LookupServiceImpl(scopeFactory));
+            _dispatcher.InvokeAsyncE(() => _lookupService = new LookupServiceImpl(scopeFactory));
         }
     }
 
@@ -63,7 +82,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService.Snoop(snoopableType));
+            _dispatcher.InvokeAsyncE(() => _lookupService.Snoop(snoopableType));
         }
 
         return this;
@@ -77,7 +96,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService.Snoop(snoopableObject));
+            _dispatcher.InvokeAsyncE(() => _lookupService.Snoop(snoopableObject));
         }
 
         return this;
@@ -91,7 +110,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService.Snoop(snoopableObjects));
+            _dispatcher.InvokeAsyncE(() => _lookupService.Snoop(snoopableObjects));
         }
 
         return this;
@@ -105,7 +124,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService.DependsOn(provider));
+            _dispatcher.InvokeAsyncE(() => _lookupService.DependsOn(provider));
         }
 
         return this;
@@ -119,7 +138,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService.Show<T>());
+            _dispatcher.InvokeAsyncE(() => _lookupService.Show<T>());
         }
 
         return this;
@@ -133,7 +152,7 @@ public sealed class LookupService : ILookupService
         }
         else
         {
-            _dispatcher.InvokeAsync(() => _lookupService.Execute(handler));
+            _dispatcher.InvokeAsyncE(() => _lookupService.Execute(handler));
         }
     }
 
