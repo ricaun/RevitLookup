@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -51,6 +51,11 @@ public sealed partial class ModulesViewModel : ObservableObject
                 Version = assemblyName.Version is null ? string.Empty : assemblyName.Version.ToString(),
                 Domain = domain.FriendlyName
             };
+
+#if NET
+            var id = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(assembly).ToString().Split('#').LastOrDefault();
+            module.Domain += $" #{id}";
+#endif
 
             Modules.Add(module);
         }

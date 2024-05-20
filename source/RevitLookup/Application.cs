@@ -28,7 +28,7 @@ using RevitLookup.Services.Contracts;
 using RevitLookup.Utils;
 
 namespace RevitLookup;
-[AppLoader]
+//[AppLoader]
 [UsedImplicitly]
 public class Application : ExternalApplication
 {

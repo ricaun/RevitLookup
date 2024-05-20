@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -23,7 +23,7 @@ public static class LoggerConfigurator
             .WriteTo.Console(LogEventLevel.Information, LogTemplate)
             .WriteTo.Debug(LogEventLevel.Debug, LogTemplate)
             .WriteTo.RevitJournal(Context.UiApplication, restrictedToMinimumLevel: LogEventLevel.Error, outputTemplate: LogTemplate)
-            .MinimumLevel.Debug()
+            .MinimumLevel.Warning()
             .CreateLogger();
     }
     
