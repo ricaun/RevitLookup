@@ -24,5 +24,6 @@
             {"Release R24", "2024.1.4"},
             {"Release R25", "2025.0.4"}
         };
+        // C:\Users\ricau\AppData\Roaming\Autodesk\Revit\Addins\2025
     }
 }
