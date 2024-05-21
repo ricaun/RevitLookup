@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -55,7 +55,8 @@ public static class RibbonController
     {
         if (!settingsService.UseModifyTab)
         {
-            parentButton.AddPushButton<SnoopSelectionCommand>("Snoop Selection");
+            parentButton.AddPushButton<SnoopSelectionCommand>("Snoop Selection")
+                .SetAvailabilityController<SnoopSelectionAvailability>();
             return;
         }
 

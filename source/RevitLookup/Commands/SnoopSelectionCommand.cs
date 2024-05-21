@@ -19,6 +19,7 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 
 using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
 using Nice3point.Revit.Toolkit.External;
 using RevitLookup.Services.Contracts;
 using RevitLookup.Services.Enums;
@@ -38,5 +39,13 @@ public class SnoopSelectionCommand : ExternalCommand
         Host.GetService<ILookupService>()
             .Snoop(SnoopableType.Selection)
             .Show<SnoopView>();
+    }
+}
+
+public class SnoopSelectionAvailability : IExternalCommandAvailability
+{
+    public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
+    {
+        return true;
     }
 }

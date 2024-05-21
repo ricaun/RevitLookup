@@ -29,6 +29,20 @@ sealed partial class Build
             .ToList();
 
         Assert.NotEmpty(configurations, $"No solution configurations have been found. Pattern: {string.Join(" | ", Configurations)}");
-        return configurations;
+        return configurations.Where(NotR2X);
+    }
+
+    bool NotR2X(string configuration)
+    {
+        if (configuration.Contains("R21"))
+            return false;
+        if (configuration.Contains("R22"))
+            return false;
+        if (configuration.Contains("R23"))
+            return false;
+        //if (configuration.Contains("R24"))
+        //    return false;
+
+        return true;
     }
 }
