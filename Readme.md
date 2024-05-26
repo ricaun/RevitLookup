@@ -5,6 +5,8 @@
     </picture>
 </div>
 
+**This repo uses the `AssemblyLoadContext` to load the `RevitLookup` for `Revit 2025` in a diferent context.**
+
 Interactive Revit project database exploration tool to view and navigate BIM element parameters, properties and relationships.
 
 Whether you are a seasoned professional or just starting out, the RevitLookup is an indispensable tool for anyone who works with Revit projects. Its ease of use and advanced features make it the perfect solution for exploring, analyzing and manipulating Revit databases.
