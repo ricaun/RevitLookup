@@ -44,6 +44,16 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="ricaun.ILRepack" Version="1.0.0-rc" />
+        <ILRepackIgnoreReferences Include="RevitLookup.UI.dll" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <ILRepackImportance>High</ILRepackImportance>
+        <ILRepackCommandExtra>/union /allowduplicateresources</ILRepackCommandExtra>
+    </PropertyGroup>
+
+    <ItemGroup>
         <!--Revit references-->
         <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="2.*"/>
         <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
