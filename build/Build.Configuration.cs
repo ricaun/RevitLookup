@@ -1,5 +1,6 @@
 ﻿sealed partial class Build
 {
+    const string Version = "1.0.0";
     readonly AbsolutePath ArtifactsDirectory = RootDirectory / "output";
     readonly AbsolutePath ChangeLogPath = RootDirectory / "Changelog.md";
 
@@ -18,11 +19,16 @@
 
         VersionMap = new()
         {
-            { "Release R21", "2021.3.10" },
-            { "Release R22", "2022.3.10" },
-            { "Release R23", "2023.3.10" },
-            { "Release R24", "2024.1.10" },
-            { "Release R25", "2025.0.10" }
+            { "Release R21", Version },
+            { "Release R22", Version },
+            { "Release R23", Version },
+            { "Release R24", Version },
+            { "Release R25", Version }
+        };
+
+        Bundles = new[]
+        {
+            Solution.RevitLookup
         };
     }
 }

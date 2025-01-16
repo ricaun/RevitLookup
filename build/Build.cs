@@ -5,6 +5,7 @@ using Nuke.Common.ProjectModel;
 sealed partial class Build : NukeBuild
 {
     string[] Configurations;
+    Project[] Bundles;
     Dictionary<string, string> VersionMap;
     Dictionary<Project, Project> InstallersMap;
 
