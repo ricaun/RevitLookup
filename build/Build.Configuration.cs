@@ -23,7 +23,8 @@
             { "Release R22", Version },
             { "Release R23", Version },
             { "Release R24", Version },
-            { "Release R25", Version }
+            { "Release R25", Version },
+            { "Release R26", Version }
         };
 
         Bundles = new[]
