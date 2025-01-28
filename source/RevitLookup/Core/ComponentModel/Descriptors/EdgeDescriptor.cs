@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -45,24 +45,24 @@ public sealed class EdgeDescriptor : Descriptor, IDescriptorCollector, IDescript
         contextMenu.AddMenuItem("SelectMenuItem")
             .SetCommand(_edge, edge =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
                 if (edge.Reference is null) return;
 
-                RevitShell.ActionEventHandler.Raise(_ => { Context.ActiveUiDocument.Selection.SetReferences([edge.Reference]); });
+                RevitShell.ActionEventHandler.Raise(_ => { Context.UiDocument.Selection.SetReferences([edge.Reference]); });
             })
             .SetShortcut(Key.F6);
 
         contextMenu.AddMenuItem("ShowMenuItem")
             .SetCommand(_edge, edge =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
                 if (edge.Reference is null) return;
 
                 RevitShell.ActionEventHandler.Raise(_ =>
                 {
-                    var element = edge.Reference.ElementId.ToElement(Context.ActiveDocument);
-                    if (element is not null) Context.ActiveUiDocument.ShowElements(element);
-                    Context.ActiveUiDocument.Selection.SetReferences([edge.Reference]);
+                    var element = edge.Reference.ElementId.ToElement(Context.Document);
+                    if (element is not null) Context.UiDocument.ShowElements(element);
+                    Context.UiDocument.Selection.SetReferences([edge.Reference]);
                 });
             })
             .SetShortcut(Key.F7);
@@ -72,7 +72,7 @@ public sealed class EdgeDescriptor : Descriptor, IDescriptorCollector, IDescript
             .SetAvailability(_edge.ApproximateLength > 1e-6)
             .SetCommand(_edge, async edge =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 

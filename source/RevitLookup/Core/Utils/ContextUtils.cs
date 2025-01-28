@@ -27,7 +27,7 @@ public static class ContextUtils
         var context = FindContext(obj);
         if (context is not null) return context;
 
-        return Context.ActiveDocument;
+        return Context.Document;
     }
 
     public static Document FindSuitableContext(object obj, Document context)

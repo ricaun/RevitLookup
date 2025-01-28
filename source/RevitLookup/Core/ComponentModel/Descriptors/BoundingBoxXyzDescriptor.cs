@@ -133,7 +133,7 @@ public sealed class BoundingBoxXyzDescriptor(BoundingBoxXYZ box) : Descriptor, I
         contextMenu.AddMenuItem("VisualizeMenuItem")
             .SetCommand(box, async boxArg =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 

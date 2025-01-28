@@ -36,7 +36,7 @@ public sealed class MeshDescriptor(Mesh mesh) : Descriptor, IDescriptorCollector
             .SetAvailability(mesh.Vertices.Count > 0)
             .SetCommand(mesh, async meshArg =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 

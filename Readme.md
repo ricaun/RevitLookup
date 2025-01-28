@@ -22,6 +22,12 @@ Whether you are a seasoned professional or just starting out, the RevitLookup is
     </picture>
 </div>
 
+## Build Bundle
+
+The command below allow to build the project and generate the `.bundle`.
+
+`.\.nuke\build.cmd CreateBundle`
+
 ## Installation
 
 - [Download](https://github.com/jeremytammik/RevitLookup/releases/latest) and run the MSI file.

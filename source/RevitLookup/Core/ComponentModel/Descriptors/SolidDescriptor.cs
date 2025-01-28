@@ -45,7 +45,7 @@ public sealed class SolidDescriptor : Descriptor, IDescriptorExtension, IDescrip
         contextMenu.AddMenuItem("SelectMenuItem")
             .SetCommand(_solid, solid =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 RevitShell.ActionEventHandler.Raise(_ =>
                 {
@@ -57,7 +57,7 @@ public sealed class SolidDescriptor : Descriptor, IDescriptorExtension, IDescrip
 
                     if (references.Count == 0) return;
 
-                    Context.ActiveUiDocument.Selection.SetReferences(references);
+                    Context.UiDocument.Selection.SetReferences(references);
                 });
             })
             .SetShortcut(Key.F6);
@@ -65,7 +65,7 @@ public sealed class SolidDescriptor : Descriptor, IDescriptorExtension, IDescrip
         contextMenu.AddMenuItem("ShowMenuItem")
             .SetCommand(_solid, solid =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 RevitShell.ActionEventHandler.Raise(_ =>
                 {
@@ -77,9 +77,9 @@ public sealed class SolidDescriptor : Descriptor, IDescriptorExtension, IDescrip
 
                     if (references.Count == 0) return;
 
-                    var element = references[0].ElementId.ToElement(Context.ActiveDocument);
-                    if (element is not null) Context.ActiveUiDocument.ShowElements(element);
-                    Context.ActiveUiDocument.Selection.SetReferences(references);
+                    var element = references[0].ElementId.ToElement(Context.Document);
+                    if (element is not null) Context.UiDocument.ShowElements(element);
+                    Context.UiDocument.Selection.SetReferences(references);
                 });
             })
             .SetShortcut(Key.F7);
@@ -89,7 +89,7 @@ public sealed class SolidDescriptor : Descriptor, IDescriptorExtension, IDescrip
             .SetAvailability(_solid.IsValidForTessellation())
             .SetCommand(_solid, async solid =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 

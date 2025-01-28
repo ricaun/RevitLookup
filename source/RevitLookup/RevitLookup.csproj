@@ -61,7 +61,12 @@
     <ItemGroup>
         <!--Revit references-->
         <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="2.*" />
-        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).2.0" Condition="$(Configuration.Contains('R21'))"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).2.0" Condition="$(Configuration.Contains('R22'))"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).2.0" Condition="$(Configuration.Contains('R23'))"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).1.0" Condition="$(Configuration.Contains('R24'))"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).0.0" Condition="$(Configuration.Contains('R25'))"/>
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).0.0" Condition="$(Configuration.Contains('R26'))"/>
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="$(RevitVersion).*" />

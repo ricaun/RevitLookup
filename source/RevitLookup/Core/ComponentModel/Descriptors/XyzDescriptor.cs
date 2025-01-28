@@ -44,7 +44,7 @@ public sealed class XyzDescriptor : Descriptor, IDescriptorConnector
             .SetAvailability(!_point.IsUnitLength())
             .SetCommand(_point, async point =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 

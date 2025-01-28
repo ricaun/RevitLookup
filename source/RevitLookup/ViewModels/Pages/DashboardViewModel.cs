@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -161,7 +161,7 @@ public sealed partial class DashboardViewModel(
 
     private bool Validate()
     {
-        if (Context.ActiveUiDocument is not null) return true;
+        if (Context.UiDocument is not null) return true;
 
         notificationService.ShowWarning("Request denied", "There are no open documents");
         return false;

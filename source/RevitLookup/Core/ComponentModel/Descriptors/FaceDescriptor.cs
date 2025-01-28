@@ -45,24 +45,24 @@ public class FaceDescriptor : Descriptor, IDescriptorCollector, IDescriptorConne
         contextMenu.AddMenuItem("SelectMenuItem")
             .SetCommand(_face, face =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
                 if (face.Reference is null) return;
 
-                RevitShell.ActionEventHandler.Raise(_ => Context.ActiveUiDocument.Selection.SetReferences([face.Reference]));
+                RevitShell.ActionEventHandler.Raise(_ => Context.UiDocument.Selection.SetReferences([face.Reference]));
             })
             .SetShortcut(Key.F6);
 
         contextMenu.AddMenuItem("ShowMenuItem")
             .SetCommand(_face, face =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
                 if (face.Reference is null) return;
 
                 RevitShell.ActionEventHandler.Raise(_ =>
                 {
-                    var element = face.Reference.ElementId.ToElement(Context.ActiveDocument);
-                    if (element is not null) Context.ActiveUiDocument.ShowElements(element);
-                    Context.ActiveUiDocument.Selection.SetReferences([face.Reference]);
+                    var element = face.Reference.ElementId.ToElement(Context.Document);
+                    if (element is not null) Context.UiDocument.ShowElements(element);
+                    Context.UiDocument.Selection.SetReferences([face.Reference]);
                 });
             })
             .SetShortcut(Key.F7);
@@ -72,7 +72,7 @@ public class FaceDescriptor : Descriptor, IDescriptorCollector, IDescriptorConne
             .SetAvailability(_face.Area > 1e-6)
             .SetCommand(_face, async face =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 

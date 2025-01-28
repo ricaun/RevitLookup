@@ -36,8 +36,8 @@ public sealed class FamilyManagerDescriptor(FamilyManager familyManager) : Descr
 
         IVariants ResolveGetAssociatedFamilyParameter()
         {
-            var elementTypes = Context.ActiveDocument.GetElements().WhereElementIsElementType();
-            var elementInstances = Context.ActiveDocument.GetElements().WhereElementIsNotElementType();
+            var elementTypes = Context.Document.GetElements().WhereElementIsElementType();
+            var elementInstances = Context.Document.GetElements().WhereElementIsNotElementType();
             var elements = elementTypes
                 .UnionWith(elementInstances)
                 .ToElements();

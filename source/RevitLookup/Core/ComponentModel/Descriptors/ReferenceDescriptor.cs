@@ -55,9 +55,9 @@ public sealed class ReferenceDescriptor : Descriptor, IDescriptorResolver, IDesc
         contextMenu.AddMenuItem("SelectMenuItem")
             .SetCommand(_reference, reference =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
-                RevitShell.ActionEventHandler.Raise(_ => Context.ActiveUiDocument.Selection.SetReferences([reference]));
+                RevitShell.ActionEventHandler.Raise(_ => Context.UiDocument.Selection.SetReferences([reference]));
             })
             .SetShortcut(Key.F6);
 #endif

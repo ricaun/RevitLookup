@@ -1,4 +1,4 @@
-﻿// Copyright 2003-2024 by Autodesk, Inc.
+// Copyright 2003-2024 by Autodesk, Inc.
 // 
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
@@ -46,24 +46,24 @@ public sealed class CurveDescriptor : Descriptor, IDescriptorResolver, IDescript
         contextMenu.AddMenuItem("SelectMenuItem")
             .SetCommand(_curve, curve =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
                 if (curve.Reference is null) return;
 
-                RevitShell.ActionEventHandler.Raise(_ => { Context.ActiveUiDocument.Selection.SetReferences([curve.Reference]); });
+                RevitShell.ActionEventHandler.Raise(_ => { Context.UiDocument.Selection.SetReferences([curve.Reference]); });
             })
             .SetShortcut(Key.F6);
 
         contextMenu.AddMenuItem("ShowMenuItem")
             .SetCommand(_curve, curve =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
                 if (curve.Reference is null) return;
 
                 RevitShell.ActionEventHandler.Raise(_ =>
                 {
-                    var element = curve.Reference.ElementId.ToElement(Context.ActiveDocument);
-                    if (element is not null) Context.ActiveUiDocument.ShowElements(element);
-                    Context.ActiveUiDocument.Selection.SetReferences([curve.Reference]);
+                    var element = curve.Reference.ElementId.ToElement(Context.Document);
+                    if (element is not null) Context.UiDocument.ShowElements(element);
+                    Context.UiDocument.Selection.SetReferences([curve.Reference]);
                 });
             })
             .SetShortcut(Key.F7);
@@ -73,7 +73,7 @@ public sealed class CurveDescriptor : Descriptor, IDescriptorResolver, IDescript
             .SetAvailability((_curve.IsBound || _curve.IsCyclic) && _curve.ApproximateLength > 1e-6)
             .SetCommand(_curve, async curve =>
             {
-                if (Context.ActiveUiDocument is null) return;
+                if (Context.UiDocument is null) return;
 
                 var context = (ISnoopViewModel) contextMenu.DataContext;
 
